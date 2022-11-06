@@ -29,7 +29,7 @@ public class Signup extends JFrame {
 	private JPasswordField password1;
 	private JPasswordField confirm;
 
-	
+	//Establish connection to DB
 	public static Connection getConnection() throws URISyntaxException, SQLException {
 	    URI dbUri = new URI("postgres://sddbvrkvkbkbcz:61bdd3cfd6dcad474f70747d694116ca58f7cef4cff3986bdba0e7fa15a54317@ec2-44-209-158-64.compute-1.amazonaws.com:5432/dovqiu3kter09");
 	    
@@ -42,11 +42,9 @@ public class Signup extends JFrame {
 	    return conn;
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//Create the frame
 	public Signup() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 323, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,17 +77,17 @@ public class Signup extends JFrame {
 		panel.add(username1);
 		username1.setColumns(10);
 		
+		//Signup button creates new user in DB using given username and password
 		JButton btnNewButton = new JButton("Signup");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Connection c = null;
 			    Statement stmt = null;
 				String username = username1.getText();
-				String password = password1.getText();
-				String confirmpassword = confirm.getText();
+				String password = String.valueOf(password1.getPassword());
+				String confirmpassword = String.valueOf(confirm.getPassword());
 				
 				try {
-					
 					c=getConnection();
 					stmt=c.createStatement();
 					if(password.equals(confirmpassword)) {
@@ -104,7 +102,6 @@ public class Signup extends JFrame {
 					
 					stmt.close();
 			        c.close();
-			
 				}
 					catch(Exception e1) {
 						JOptionPane.showMessageDialog(null, "error");

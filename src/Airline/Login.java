@@ -33,15 +33,11 @@ public class Login extends JFrame {
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
 	
-	
 	Connection con;
 	PreparedStatement pst1;
 	PreparedStatement pst2;
 	
-
-	/**
-	 * Launch the application.
-	 */
+	//Launch the Application
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,7 +49,7 @@ public class Login extends JFrame {
 		});
 	}
 	
-	
+	//Establish connection to DB
 	public static Connection getConnection() throws URISyntaxException, SQLException {
 	    URI dbUri = new URI("postgres://sddbvrkvkbkbcz:61bdd3cfd6dcad474f70747d694116ca58f7cef4cff3986bdba0e7fa15a54317@ec2-44-209-158-64.compute-1.amazonaws.com:5432/dovqiu3kter09");
 	    
@@ -66,11 +62,7 @@ public class Login extends JFrame {
 	    return conn;
 	}
 	
-
-
-	/**
-	 * Create the frame.
-	 */
+	//Create the frame
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -104,16 +96,16 @@ public class Login extends JFrame {
 		passwordField.setBounds(161, 118, 167, 20);
 		panel.add(passwordField);
 		
+		//Login Button checks for user or admin login
 		JButton Login_Button = new JButton("Login");
 		Login_Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
-				String password = passwordField.getText();
+				String password = String.valueOf(passwordField.getPassword());
 				
 				try {
-				
 				con=getConnection();
-				
+
 				String query1="select * from admin where admin_username =? and admin_password =?";
 				pst1= con.prepareStatement(query1);
 				pst1.setString(1,  username);
@@ -126,19 +118,17 @@ public class Login extends JFrame {
 				pst2.setString(2, password);
 				ResultSet rs2 = pst2.executeQuery();
 				
-				if(rs1.next()) {
+				if(rs1.next()) { //admin login
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
 					ManagerHome frame = new ManagerHome();
 					frame.setVisible(true);
-					
 				}
-				else if(rs2.next()) {
+				else if(rs2.next()) { //user login
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
 					UserHome frame = new UserHome();
 					frame.setVisible(true);
-					
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Login failed");
@@ -156,15 +146,16 @@ public class Login extends JFrame {
 		Login_Button.setBounds(106, 186, 89, 23);
 		panel.add(Login_Button);
 		
+		//Signup button opens new frame
 		JButton Signup_Button = new JButton("Signup");
 		Signup_Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Signup frame = new Signup();
 				frame.setVisible(true);
-
 				
 			}
 		});
+		
 		Signup_Button.setBounds(256, 186, 89, 23);
 		panel.add(Signup_Button);
 	}
