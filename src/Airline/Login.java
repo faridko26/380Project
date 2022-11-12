@@ -33,7 +33,7 @@ public class Login extends JFrame {
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
 	
-	Connection con;
+	
 	PreparedStatement pst1;
 	PreparedStatement pst2;
 	
@@ -49,18 +49,7 @@ public class Login extends JFrame {
 		});
 	}
 	
-	//Establish connection to DB
-	public static Connection getConnection() throws URISyntaxException, SQLException {
-	    URI dbUri = new URI("postgres://sddbvrkvkbkbcz:61bdd3cfd6dcad474f70747d694116ca58f7cef4cff3986bdba0e7fa15a54317@ec2-44-209-158-64.compute-1.amazonaws.com:5432/dovqiu3kter09");
-	    
-	    Connection conn;
-	    String username = dbUri.getUserInfo().split(":")[0];
-	    String password = dbUri.getUserInfo().split(":")[1];
-	    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-	    conn=DriverManager.getConnection(dbUrl, username, password);
 
-	    return conn;
-	}
 	
 	//Create the frame
 	public Login() {
@@ -102,18 +91,20 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
 				String password = String.valueOf(passwordField.getPassword());
+				DatabaseConnection connect1 = new DatabaseConnection();
+		        Connection connectDB = connect1.getConnection();
 				
 				try {
-				con=getConnection();
+					
 
 				String query1="select * from admin where admin_username =? and admin_password =?";
-				pst1= con.prepareStatement(query1);
+				pst1= connectDB.prepareStatement(query1);
 				pst1.setString(1,  username);
 				pst1.setString(2, password);
 				ResultSet rs1 = pst1.executeQuery();
 				
 				String query2="select * from users where username =? and password =?";
-				pst2= con.prepareStatement(query2);
+				pst2= connectDB.prepareStatement(query2);
 				pst2.setString(1,  username);
 				pst2.setString(2, password);
 				ResultSet rs2 = pst2.executeQuery();
@@ -136,7 +127,7 @@ public class Login extends JFrame {
 				
 				pst1.close();
 				pst2.close();
-		        con.close();
+				connectDB.close();
 			}
 				catch(Exception e1) {
 					JOptionPane.showMessageDialog(null, "error");

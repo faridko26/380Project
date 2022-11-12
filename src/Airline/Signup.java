@@ -29,18 +29,7 @@ public class Signup extends JFrame {
 	private JPasswordField password1;
 	private JPasswordField confirm;
 
-	//Establish connection to DB
-	public static Connection getConnection() throws URISyntaxException, SQLException {
-	    URI dbUri = new URI("postgres://sddbvrkvkbkbcz:61bdd3cfd6dcad474f70747d694116ca58f7cef4cff3986bdba0e7fa15a54317@ec2-44-209-158-64.compute-1.amazonaws.com:5432/dovqiu3kter09");
-	    
-	    Connection conn;
-	    String username = dbUri.getUserInfo().split(":")[0];
-	    String password = dbUri.getUserInfo().split(":")[1];
-	    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-	    conn=DriverManager.getConnection(dbUrl, username, password);
-
-	    return conn;
-	}
+	
 
 	//Create the frame
 	public Signup() {
@@ -86,10 +75,12 @@ public class Signup extends JFrame {
 				String username = username1.getText();
 				String password = String.valueOf(password1.getPassword());
 				String confirmpassword = String.valueOf(confirm.getPassword());
+				DatabaseConnection connectNow = new DatabaseConnection();
+		        Connection connectDB = connectNow.getConnection();
 				
 				try {
-					c=getConnection();
-					stmt=c.createStatement();
+					
+					stmt=connectDB.createStatement();
 					if(password.equals(confirmpassword)) {
 						String query="insert into users (username,password) values('"+username+"', '"+password+"')";
 						stmt.executeUpdate(query);
@@ -101,7 +92,7 @@ public class Signup extends JFrame {
 					}
 					
 					stmt.close();
-			        c.close();
+					connectDB.close();
 				}
 					catch(Exception e1) {
 						JOptionPane.showMessageDialog(null, "error");
