@@ -87,6 +87,14 @@ public class ManagerHome extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Add Flight");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Addflight add = new Addflight();
+				add.setVisible(true);
+				
+				
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 		
 		//User Menu

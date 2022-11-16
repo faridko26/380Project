@@ -29,9 +29,10 @@ import java.sql.SQLException;
 public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField usernameField;
+	private static JTextField usernameField;
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
+	static String cus_id; 
 	
 	
 	PreparedStatement pst1;
@@ -53,6 +54,7 @@ public class Login extends JFrame {
 	
 	//Create the frame
 	public Login() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -103,11 +105,21 @@ public class Login extends JFrame {
 				pst1.setString(2, password);
 				ResultSet rs1 = pst1.executeQuery();
 				
-				String query2="select * from users where username =? and password =?";
+				String query2="select * from customers where username =? and password =?";
 				pst2= connectDB.prepareStatement(query2);
 				pst2.setString(1,  username);
 				pst2.setString(2, password);
 				ResultSet rs2 = pst2.executeQuery();
+				
+				String query3="select * from customers where username =? and password =?";
+				pst2= connectDB.prepareStatement(query3);
+				pst2.setString(1,  username);
+				pst2.setString(2, password);
+				ResultSet rs3 = pst2.executeQuery();
+				
+				if(rs3.next()) {
+				cus_id = rs3.getString("id");
+				}
 				
 				if(rs1.next()) { //admin login
 					dispose();
@@ -119,7 +131,12 @@ public class Login extends JFrame {
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
 					UserHome frame = new UserHome();
+					
+					
 					frame.setVisible(true);
+					
+					
+					
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Login failed");

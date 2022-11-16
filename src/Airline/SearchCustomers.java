@@ -78,7 +78,7 @@ public class SearchCustomers extends JFrame{
 				try {
 					con=getConnection();
 					
-					String query1="select * from users where username =?";
+					String query1="select * from customers where username =?";
 					pst1= con.prepareStatement(query1);
 					pst1.setString(1,  username);
 					ResultSet rs1 = pst1.executeQuery();
