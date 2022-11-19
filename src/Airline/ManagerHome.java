@@ -44,9 +44,11 @@ public class ManagerHome extends JFrame {
 	}
 	
 	//Create Frame
-	public ManagerHome() {
+	public ManagerHome(Session s) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 990, 590);
+		setTitle(s.getUsername() + " - Manager Home");
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -58,27 +60,35 @@ public class ManagerHome extends JFrame {
 		JMenuItem MenuAddCustomer = new JMenuItem("Add Customer");
 		mnNewMenu.add(MenuAddCustomer);
 		MenuAddCustomer.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
+				
 				Signup frame = new Signup();
 				frame.setVisible(true);
 			}
+			
 		});
 		
 		JMenuItem MenuSearchCustomer = new JMenuItem("Search Customer");
 		mnNewMenu.add(MenuSearchCustomer);
 		MenuSearchCustomer.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-			SearchCustomers frame = new SearchCustomers();
-			frame.setVisible(true);
+			
+				SearchCustomers frame = new SearchCustomers(s);
+				frame.setVisible(true);
+			
 			}
 		});
 		
 		JMenuItem MenuViewCustomers = new JMenuItem("View Customers");
 		mnNewMenu.add(MenuViewCustomers);
 		MenuViewCustomers.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-			ViewCustomers frame = new ViewCustomers();
-			frame.setVisible(true);
+			
+				ViewCustomers frame = new ViewCustomers();
+				frame.setVisible(true);
 			}
 		});
 		
@@ -101,11 +111,48 @@ public class ManagerHome extends JFrame {
 		JMenu mnNewMenu_2 = new JMenu("User");
 		menuBar.add(mnNewMenu_2);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Create Management user");
-		mnNewMenu_2.add(mntmNewMenuItem_4);
+		JMenuItem createMgmt = new JMenuItem("Create management user");
+		mnNewMenu_2.add(createMgmt);
+		createMgmt.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ManagerSignUp newMgmt = new ManagerSignUp();
+				newMgmt.setVisible(true);
+			}
+			
+			
+		});
+		
+		JMenuItem searchMgmt = new JMenuItem("Search management users");
+		mnNewMenu_2.add(searchMgmt);
+		searchMgmt.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		
+		JMenu mnNewMenu_3 = new JMenu("Logout");
+		menuBar.add(mnNewMenu_3);
+		JMenuItem exit = new JMenuItem("Exit");
+		mnNewMenu_3.add(exit);
+		exit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				dispose();
+				Login frame = new Login();
+				frame.setVisible(true);
+			}
+		});
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

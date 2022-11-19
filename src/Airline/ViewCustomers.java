@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 
+<<<<<<< Updated upstream
 public class ViewCustomers extends JFrame {
 
 	private JPanel contentPane;
@@ -33,6 +34,26 @@ public class ViewCustomers extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+=======
+		    return conn;
+		}
+	 //create frame
+	    public ViewCustomers() {
+	    	setResizable(false);
+	    	
+	    	try {
+	    		con=getConnection();
+	    		
+	    		//Selects data from users table
+		    	String query1="select * from customers"; 
+				pst1= con.prepareStatement(query1);
+				ResultSet rs1 = pst1.executeQuery();
+				
+				//Inserts each name in 'username' column into list
+				DefaultListModel<String> listModel = new DefaultListModel<>();
+				while(rs1.next()) {
+					listModel.addElement(rs1.getString("username"));
+>>>>>>> Stashed changes
 				}
 			}
 		});

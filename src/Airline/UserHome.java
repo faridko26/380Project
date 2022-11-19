@@ -1,10 +1,12 @@
 package Airline;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+<<<<<<< Updated upstream
 import javax.swing.JDesktopPane;
 import java.awt.Color;
 import javax.swing.JMenuBar;
@@ -17,33 +19,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
+=======
+>>>>>>> Stashed changes
 
 public class UserHome extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserHome frame = new UserHome();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public UserHome() {
+	public UserHome(Session s) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 940, 610);
+		setTitle(s.getUsername() + " - Customer Home");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -61,6 +50,7 @@ public class UserHome extends JFrame {
 		desktopPane.setBounds(0, 570, 924, -567);
 		panel.add(desktopPane);
 		
+<<<<<<< Updated upstream
 		JButton Flights_btn = new JButton("Flights");
 		Flights_btn.setBounds(176, 241, 113, 41);
 		panel.add(Flights_btn);
@@ -83,6 +73,62 @@ public class UserHome extends JFrame {
 				
 				try {
 					
+=======
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu menu = new JMenu("Flight");
+		menuBar.add(menu);
+		
+		JMenuItem bookFlight = new JMenuItem("Book flight");
+		menu.add(bookFlight);
+		bookFlight.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		JMenu mnNewMenu = new JMenu("View");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem viewBooked = new JMenuItem("Booked flights");
+		mnNewMenu.add(viewBooked);
+		viewBooked.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				ViewBookedFlights frame = new ViewBookedFlights(s);
+				frame.setVisible(true);
+				
+			}
+			
+		});
+		
+		JMenuItem viewDetails = new JMenuItem("View/edit details");
+		mnNewMenu.add(viewDetails);
+		
+		JMenu mnNewMenu_1 = new JMenu("Logout");
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem exit = new JMenuItem("Exit");
+		mnNewMenu_1.add(exit);
+		exit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				dispose();
+				Login frame = new Login();
+				frame.setVisible(true);
+			}
+
+		});
+		
+	}
+>>>>>>> Stashed changes
 
 				String query3="select * from customers where id = ?";
 				pst3= connectprofile.prepareStatement(query3);

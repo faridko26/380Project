@@ -32,8 +32,12 @@ public class Login extends JFrame {
 	private static JTextField usernameField;
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
+<<<<<<< Updated upstream
 	static String cus_id; 
 	
+=======
+	private String name;
+>>>>>>> Stashed changes
 	
 	PreparedStatement pst1;
 	PreparedStatement pst2;
@@ -45,16 +49,17 @@ public class Login extends JFrame {
 				
 					Login frame = new Login();
 					frame.setVisible(true);
-				
 			}
 		});
 	}
 	
-
-	
 	//Create the frame
 	public Login() {
+<<<<<<< Updated upstream
 		setResizable(false);
+=======
+		
+>>>>>>> Stashed changes
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -68,7 +73,7 @@ public class Login extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("UserName");
+		JLabel lblNewLabel = new JLabel("User Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel.setBounds(72, 84, 79, 14);
 		panel.add(lblNewLabel);
@@ -90,15 +95,17 @@ public class Login extends JFrame {
 		//Login Button checks for user or admin login
 		JButton Login_Button = new JButton("Login");
 		Login_Button.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
+				
 				String username = usernameField.getText();
 				String password = String.valueOf(passwordField.getPassword());
+				name = username;
 				DatabaseConnection connect1 = new DatabaseConnection();
 		        Connection connectDB = connect1.getConnection();
 				
 				try {
-					
-
+				
 				String query1="select * from admin where admin_username =? and admin_password =?";
 				pst1= connectDB.prepareStatement(query1);
 				pst1.setString(1,  username);
@@ -122,17 +129,25 @@ public class Login extends JFrame {
 				}
 				
 				if(rs1.next()) { //admin login
+					
+					Session adminSession = new Session(username, rs1.getString("admin_id"));
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
-					ManagerHome frame = new ManagerHome();
+					ManagerHome frame = new ManagerHome(adminSession);
 					frame.setVisible(true);
 				}
 				else if(rs2.next()) { //user login
+					
+					Session userSession = new Session(username, rs2.getString("cus_id"));
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
+<<<<<<< Updated upstream
 					UserHome frame = new UserHome();
 					
 					
+=======
+					UserHome frame = new UserHome(userSession);
+>>>>>>> Stashed changes
 					frame.setVisible(true);
 					
 					
@@ -167,6 +182,7 @@ public class Login extends JFrame {
 		Signup_Button.setBounds(256, 186, 89, 23);
 		panel.add(Signup_Button);
 	}
+	
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "SwingAction");
