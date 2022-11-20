@@ -119,10 +119,7 @@ public class Login extends JFrame {
 					UserHome frame = new UserHome(userSession);
 					frame.setVisible(true);
 					
-					
-					
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Login failed");
 				}
 				
