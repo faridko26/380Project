@@ -17,15 +17,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 
-<<<<<<< Updated upstream
 public class ViewCustomers extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -34,34 +31,12 @@ public class ViewCustomers extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-=======
-		    return conn;
-		}
-	 //create frame
-	    public ViewCustomers() {
-	    	setResizable(false);
-	    	
-	    	try {
-	    		con=getConnection();
-	    		
-	    		//Selects data from users table
-		    	String query1="select * from customers"; 
-				pst1= con.prepareStatement(query1);
-				ResultSet rs1 = pst1.executeQuery();
-				
-				//Inserts each name in 'username' column into list
-				DefaultListModel<String> listModel = new DefaultListModel<>();
-				while(rs1.next()) {
-					listModel.addElement(rs1.getString("username"));
->>>>>>> Stashed changes
 				}
+				
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	@SuppressWarnings("unchecked")
 	public ViewCustomers() {
 		setTitle("View Customers");
@@ -95,49 +70,40 @@ public class ViewCustomers extends JFrame {
 		try {
 			
 
-		String query5="select * from customers";
-		pst5= connectDB.prepareStatement(query5);
+			String query5="select * from customers";
+			pst5= connectDB.prepareStatement(query5);
 	
-		ResultSet rs5 = pst5.executeQuery();
+			ResultSet rs5 = pst5.executeQuery();
 		
-		ResultSetMetaData rs5m = rs5.getMetaData();
+			ResultSetMetaData rs5m = rs5.getMetaData();
 		
-		int c;
-		c = rs5m.getColumnCount();
+			int c;
+			c = rs5m.getColumnCount();
 		
-		DefaultTableModel DT = (DefaultTableModel)table.getModel();
-		DT.setRowCount(0);
+			DefaultTableModel DT = (DefaultTableModel)table.getModel();
+			DT.setRowCount(0);
 		
-		while(rs5.next()) {
-			@SuppressWarnings("rawtypes")
-			Vector v2 = new Vector();
+			while(rs5.next()) {
+				@SuppressWarnings("rawtypes")
+				Vector v2 = new Vector();
 			
-			for (int i = 1; i<=c; i++) {
+				for (int i = 1; i<=c; i++) {
 				
-				v2.add(rs5.getString("id"));
-				v2.add(rs5.getString("firstname"));
-				v2.add(rs5.getString("lastname"));
-				v2.add(rs5.getString("gender"));
-				v2.add(rs5.getString("age"));
-				v2.add(rs5.getString("phonenumber"));
-				v2.add(rs5.getString("email"));
+					v2.add(rs5.getString("id"));
+					v2.add(rs5.getString("firstname"));
+					v2.add(rs5.getString("lastname"));
+					v2.add(rs5.getString("gender"));
+					v2.add(rs5.getString("age"));
+					v2.add(rs5.getString("phonenumber"));
+					v2.add(rs5.getString("email"));
 				
 				
+				}
+			
+				DT.addRow(v2);
 			}
-			
-			DT.addRow(v2);
-		}
-		
-		
-		
-		
-		pst5.close();
-		connectDB.close();
-	}
-		catch(Exception e1) {
+		} catch(Exception e1) {
 			JOptionPane.showMessageDialog(null, "error");
 		}
-		
-		
 	}
 }

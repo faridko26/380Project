@@ -1,14 +1,11 @@
 package Airline;
+
 import java.awt.EventQueue;
-
-
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JPasswordField;
@@ -17,13 +14,9 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.event.ActionListener;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 
 public class Login extends JFrame {
@@ -32,13 +25,8 @@ public class Login extends JFrame {
 	private static JTextField usernameField;
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
-<<<<<<< Updated upstream
 	static String cus_id; 
-	
-=======
 	private String name;
->>>>>>> Stashed changes
-	
 	PreparedStatement pst1;
 	PreparedStatement pst2;
 	
@@ -55,11 +43,8 @@ public class Login extends JFrame {
 	
 	//Create the frame
 	public Login() {
-<<<<<<< Updated upstream
-		setResizable(false);
-=======
 		
->>>>>>> Stashed changes
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -118,16 +103,6 @@ public class Login extends JFrame {
 				pst2.setString(2, password);
 				ResultSet rs2 = pst2.executeQuery();
 				
-				String query3="select * from customers where username =? and password =?";
-				pst2= connectDB.prepareStatement(query3);
-				pst2.setString(1,  username);
-				pst2.setString(2, password);
-				ResultSet rs3 = pst2.executeQuery();
-				
-				if(rs3.next()) {
-				cus_id = rs3.getString("id");
-				}
-				
 				if(rs1.next()) { //admin login
 					
 					Session adminSession = new Session(username, rs1.getString("admin_id"));
@@ -141,13 +116,7 @@ public class Login extends JFrame {
 					Session userSession = new Session(username, rs2.getString("cus_id"));
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
-<<<<<<< Updated upstream
-					UserHome frame = new UserHome();
-					
-					
-=======
 					UserHome frame = new UserHome(userSession);
->>>>>>> Stashed changes
 					frame.setVisible(true);
 					
 					

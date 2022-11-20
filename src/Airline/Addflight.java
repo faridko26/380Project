@@ -41,6 +41,7 @@ public class Addflight extends JFrame {
 	 * Create the frame.
 	 */
 	public Addflight() {
+		
 		setTitle("Add Flight");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 354, 397);

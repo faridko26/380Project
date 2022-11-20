@@ -105,13 +105,9 @@ public class SearchCustomers extends JFrame {
 				
 				try {
 					
-<<<<<<< Updated upstream
-					String query1="select * from customers where username =?";
-=======
 					con =  getConnection();
 					
 					String query1="select * from customers where firstname =?";
->>>>>>> Stashed changes
 					pst1= con.prepareStatement(query1);
 					pst1.setString(1,  firstname);
 					ResultSet rs1 = pst1.executeQuery();

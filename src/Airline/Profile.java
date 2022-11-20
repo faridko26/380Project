@@ -52,14 +52,8 @@ public class Profile extends JFrame {
 	 * Create the frame.
 	 */
 	public Profile() {
+		
 		setResizable(false);
-		
-		
-		
-		
-		
-		
-		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 396, 414);
 		contentPane = new JPanel();
