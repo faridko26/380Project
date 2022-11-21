@@ -43,6 +43,7 @@ public class ViewCustomers extends JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	public ViewCustomers() {
+		setResizable(false);
 		setTitle("View Customers");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 746, 444);
@@ -93,7 +94,7 @@ public class ViewCustomers extends JFrame {
 			
 			for (int i = 1; i<=c; i++) {
 				
-				v2.add(rs5.getString("id"));
+				v2.add(rs5.getString("cus_id"));
 				v2.add(rs5.getString("firstname"));
 				v2.add(rs5.getString("lastname"));
 				v2.add(rs5.getString("gender"));

@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -62,6 +63,13 @@ public class UserHome extends JFrame {
 		panel.add(desktopPane);
 		
 		JButton Flights_btn = new JButton("Flights");
+		Flights_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Flights book = new Flights();
+				book.setVisible(true);
+				
+			}
+		});
 		Flights_btn.setBounds(176, 241, 113, 41);
 		panel.add(Flights_btn);
 		
@@ -74,7 +82,7 @@ public class UserHome extends JFrame {
 				Profile myprofile = new Profile();
 				
 
-				int id = Integer.parseInt(Login.cus_id);
+				int id = Integer.parseInt(Login.customer_id);
 				
 				PreparedStatement pst3;
 				DatabaseConnection connect2 = new DatabaseConnection();
@@ -84,7 +92,7 @@ public class UserHome extends JFrame {
 				try {
 					
 
-				String query3="select * from customers where id = ?";
+				String query3="select * from customers where cus_id = ?";
 				pst3= connectprofile.prepareStatement(query3);
 				pst3.setInt(1, id);
 				
@@ -138,5 +146,7 @@ public class UserHome extends JFrame {
 		JButton Mybooking_btn = new JButton("Mybooking");
 		Mybooking_btn.setBounds(597, 241, 113, 41);
 		panel.add(Mybooking_btn);
+		
+	
 	}
 }

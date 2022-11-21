@@ -45,6 +45,7 @@ public class ManagerHome extends JFrame {
 	
 	//Create Frame
 	public ManagerHome() {
+		setTitle("Manager Home Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 990, 590);
 		
@@ -96,6 +97,9 @@ public class ManagerHome extends JFrame {
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Booked Flights");
+		mnNewMenu_1.add(mntmNewMenuItem);
 		
 		//User Menu
 		JMenu mnNewMenu_2 = new JMenu("User");

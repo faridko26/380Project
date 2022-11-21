@@ -100,7 +100,7 @@ public class Profile extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int id = Integer.parseInt(Login.cus_id);
+				int id = Integer.parseInt(Login.customer_id);
 				
 				PreparedStatement pst4 = null;
 				DatabaseConnection connect3 = new DatabaseConnection();
@@ -135,7 +135,7 @@ public class Profile extends JFrame {
 				try {
 					
 				if(password1.equals(confirmpassword1)) {
-					String query4="update customers set firstname=?, lastname=?,gender=?,age=?,phonenumber=?,email=?,username=?,password=? where id =?";
+					String query4="update customers set firstname=?, lastname=?,gender=?,age=?,phonenumber=?,email=?,username=?,password=? where cus_id =?";
 					pst4= connectprofile.prepareStatement(query4);
 					//pst4.setInt(1, id);
 				

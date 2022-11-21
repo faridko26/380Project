@@ -3,6 +3,8 @@ import java.awt.EventQueue;
 
 
 
+
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,26 +15,26 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
 import java.awt.event.ActionListener;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JTextField usernameField;
 	private JPasswordField passwordField;
-	private final Action action = new SwingAction();
-	static String cus_id; 
+	static String customer_id; 
+	static String name;
+	static String lastname;
+	static String email;
 	
 	
 	PreparedStatement pst1;
@@ -118,7 +120,12 @@ public class Login extends JFrame {
 				ResultSet rs3 = pst2.executeQuery();
 				
 				if(rs3.next()) {
-				cus_id = rs3.getString("id");
+				customer_id = rs3.getString("cus_id");
+				name = rs3.getString("firstname");
+				lastname = rs3.getString("lastname");
+				email = rs3.getString("email");
+				
+				
 				}
 				
 				if(rs1.next()) { //admin login
@@ -166,13 +173,5 @@ public class Login extends JFrame {
 		
 		Signup_Button.setBounds(256, 186, 89, 23);
 		panel.add(Signup_Button);
-	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
 	}
 }

@@ -11,12 +11,14 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,6 +44,7 @@ public class Signup extends JFrame {
 
 	//Create the frame
 	public Signup() {
+		setTitle("Sign up");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 324, 463);
 		contentPane = new JPanel();
@@ -80,7 +83,7 @@ public class Signup extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-			    Statement stmt = null;
+				PreparedStatement pst4 = null;
 			    String firstname = firstname1.getText();
 			    String lastname = lastname1.getText();
 			    String gender;
@@ -108,10 +111,25 @@ public class Signup extends JFrame {
 				
 				try {
 					
-					stmt=connectDB.createStatement();
+					
 					if(password.equals(confirmpassword)) {
-						String query="insert into customers (firstname,lastname,gender,age,phonenumber,email,username,password) values('"+firstname+"','"+lastname+"','"+gender+"','"+age+"','"+phonenumber+"','"+email+"','"+username+"', '"+password+"')";
-						stmt.executeUpdate(query);
+						String query="insert into customers (firstname,lastname,gender,age,phonenumber,email,username,password) values(?,?,?,?,?,?,?,?)";
+						
+						pst4= connectDB.prepareStatement(query);
+						pst4.setString(1,  firstname);
+						pst4.setString(2, lastname);
+						pst4.setString(3,  gender);
+						pst4.setString(4, age);
+						pst4.setString(5, phonenumber);
+						pst4.setString(6,  email);
+						pst4.setString(7,  username);
+						pst4.setString(8,  password);
+						
+						pst4.executeUpdate();
+						
+						
+						
+						
 						JOptionPane.showMessageDialog(null, "Successfully Signed up");
 						dispose();
 					}
@@ -119,7 +137,7 @@ public class Signup extends JFrame {
 						JOptionPane.showMessageDialog(null, "password does not match");
 					}
 					
-					stmt.close();
+					pst4.close();
 					connectDB.close();
 				}
 					catch(Exception e1) {
@@ -129,7 +147,7 @@ public class Signup extends JFrame {
 			
 			
 		});
-		btnNewButton.setBounds(99, 384, 89, 23);
+		btnNewButton.setBounds(110, 381, 89, 23);
 		panel.add(btnNewButton);
 		
 		password1 = new JPasswordField();
@@ -204,5 +222,9 @@ public class Signup extends JFrame {
 		rdbtnFemale.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		rdbtnFemale.setBounds(216, 105, 63, 23);
 		panel.add(rdbtnFemale);
+		
+		ButtonGroup btnBg = new ButtonGroup();  
+	    btnBg.add(rdbtnMale);
+	    btnBg.add(rdbtnFemale);
 	}
 }
