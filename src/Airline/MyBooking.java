@@ -2,6 +2,7 @@ package Airline;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JTable;
@@ -29,7 +31,6 @@ public class MyBooking extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JButton btnNewButton;
-	private int bookid;
 	private JLabel lblNewLabel;
 	private JLabel labelbookid;
 	private JLabel lblFlightId;
@@ -43,6 +44,27 @@ public class MyBooking extends JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	public MyBooking(Session s) {
+		
+		
+		DatabaseConnection connect5 = new DatabaseConnection();
+        Connection connectDB = connect5.getConnection();
+		
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					connectDB.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
+		
+        
+        
 		setResizable(false);
 		setTitle("My Booking");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -93,17 +115,17 @@ public class MyBooking extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				DatabaseConnection connectNow1 = new DatabaseConnection();
-		        Connection connectDB1 = connectNow1.getConnection();
+				
 		        PreparedStatement pst10 = null;
 		        PreparedStatement pst11 = null;
 		        PreparedStatement pst12 = null;
+		        PreparedStatement pst13 = null;
 		        String availableseat = null;
 		        
 		       
 		        try {
 		        	String query8 = "select * from flight where flight_id =?";
-					pst10= connectDB1.prepareStatement(query8);
+					pst10= connectDB.prepareStatement(query8);
 					pst10.setInt(1,  Integer.parseInt(labelflightid.getText()));
 					ResultSet rs1 = pst10.executeQuery();
 					if(rs1.next()) {
@@ -112,7 +134,7 @@ public class MyBooking extends JFrame {
 					}
 						
 						String query9 = "DELETE from booking where bookid =?";
-						pst11= connectDB1.prepareStatement(query9);
+						pst11= connectDB.prepareStatement(query9);
 						pst11.setInt(1,  Integer.parseInt(labelbookid.getText()));
 						
 						pst11.executeUpdate();
@@ -122,7 +144,7 @@ public class MyBooking extends JFrame {
 						int updateseat = Integer.parseInt(availableseat) + Integer.parseInt(labelseatno.getText().toString());
 						
 						UpdatedSeat = Integer.toString(updateseat);
-						pst12=connectDB1.prepareStatement(query10);
+						pst12=connectDB.prepareStatement(query10);
 						pst12.setString(1, UpdatedSeat);
 						pst12.setInt(2, Integer.parseInt(labelflightid.getText()));
 						pst12.executeUpdate();
@@ -137,16 +159,62 @@ public class MyBooking extends JFrame {
 							
 						JOptionPane.showMessageDialog(null, "Successfully Cancelled and Confirmation Email was sent");
 						
+						String query5="select bookid,flightid,flightnumber,origin,destination,departuretime,departuredate,seats_no,totalprice from booking INNER JOIN customers on cusid=cus_id INNER JOIN flight on flightid=flight_id where cusid=?";
+						
+						pst13 = connectDB.prepareStatement(query5);
+						pst13.setInt(1,  Integer.parseInt(s.getCus_id()));
+						ResultSet rs5 = pst13.executeQuery();
+						
+						ResultSetMetaData rs5m = rs5.getMetaData();
+						
+						int c;
+						c = rs5m.getColumnCount();
+						
+						
+						DefaultTableModel DT = (DefaultTableModel)table.getModel();
+						DT.setRowCount(0);
+						
+						while(rs5.next()) {
+						
+							@SuppressWarnings("rawtypes")
+							Vector v2 = new Vector();
+							
+							for (int i = 1; i<=c; i++) {
+								
+								v2.add(rs5.getString("bookid"));
+								v2.add(rs5.getString("flightid"));
+								v2.add(rs5.getString("flightnumber"));
+								v2.add(rs5.getString("origin"));
+								v2.add(rs5.getString("destination"));
+								v2.add(rs5.getString("departuretime"));
+								v2.add(rs5.getString("departuredate"));
+								v2.add(rs5.getString("seats_no"));
+								v2.add(rs5.getString("totalprice"));
+								
+								
+							}
+							
+							DT.addRow(v2);
+							
+							
+							
+							
+						}
+						
+						
+						
+						
+						pst13.close();
 						
 					
 					
 					pst10.close();
 					pst11.close();
 					pst12.close();
-					connectDB1.close();
+					
 				}
 					catch(Exception e1) {
-						//JOptionPane.showMessageDialog(null, "error");
+						JOptionPane.showMessageDialog(null, "error");
 					}
 				
 				
@@ -189,9 +257,8 @@ public class MyBooking extends JFrame {
 		labelseatno.setBounds(145, 358, 76, 28);
 		contentPane.add(labelseatno);
 	
-		DatabaseConnection connect5 = new DatabaseConnection();
-        Connection connectDB = connect5.getConnection();
-        PreparedStatement pst5;
+		PreparedStatement pst5;
+       
 		
 		try {
 			
@@ -241,7 +308,7 @@ public class MyBooking extends JFrame {
 		
 		
 		pst5.close();
-		connectDB.close();
+		
 	}
 		catch(Exception e1) {
 			JOptionPane.showMessageDialog(null, "error");

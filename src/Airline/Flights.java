@@ -422,7 +422,7 @@ public class Flights extends JFrame {
 		JLabel lblNewLabel_4 = new JLabel("Please select flight");
 		lblNewLabel_4.setForeground(new Color(255, 128, 0));
 		lblNewLabel_4.setBackground(new Color(255, 128, 0));
-		lblNewLabel_4.setBounds(10, 170, 102, 14);
+		lblNewLabel_4.setBounds(10, 170, 199, 14);
 		contentPane.add(lblNewLabel_4);
 		
 		

@@ -32,20 +32,11 @@ public class ManagerHome extends JFrame {
 	PreparedStatement pst2;
 
 
-	public static Connection getConnection() throws URISyntaxException, SQLException {
-	    URI dbUri = new URI("postgres://sddbvrkvkbkbcz:61bdd3cfd6dcad474f70747d694116ca58f7cef4cff3986bdba0e7fa15a54317@ec2-44-209-158-64.compute-1.amazonaws.com:5432/dovqiu3kter09");
-	    
-	    Connection conn;
-	    String username = dbUri.getUserInfo().split(":")[0];
-	    String password = dbUri.getUserInfo().split(":")[1];
-	    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-	    conn=DriverManager.getConnection(dbUrl, username, password);
 
-	    return conn;
-	}
 	
 	//Create Frame
 	public ManagerHome(Session s) {
+		setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 990, 590);
@@ -108,6 +99,16 @@ public class ManagerHome extends JFrame {
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Edit Flight");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditFlight edit = new EditFlight(s);
+				edit.setVisible(true);
+				
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem);
+		
 		//User Menu
 		JMenu mnNewMenu_2 = new JMenu("User");
 		menuBar.add(mnNewMenu_2);
@@ -132,8 +133,8 @@ public class ManagerHome extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				SearchManagers search = new SearchManagers(s);
+				search.setVisible(true);
 			}
 		});
 		
