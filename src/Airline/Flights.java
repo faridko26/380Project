@@ -329,7 +329,7 @@ public class Flights extends JFrame {
 						//System.out.print(Integer.parseInt(availableSeat));
 						if(Integer.parseInt(SeatsNumber) <= Integer.parseInt(availableSeat)) {
 							
-							String query9 = "insert into booking (cusid,flightid,price,seats,date) values(? ,? ,? ,? ,?)";
+							String query9 = "insert into booking (cusid,flightid,totalprice,seats_no,date) values(? ,? ,? ,? ,?)";
 							
 						
 							pst9= connectDB1.prepareStatement(query9);

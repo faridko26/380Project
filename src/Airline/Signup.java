@@ -127,7 +127,8 @@ public class Signup extends JFrame {
 						
 						pst4.executeUpdate();
 						
-						
+						pst4.close();
+						connectDB.close();
 						
 						
 						JOptionPane.showMessageDialog(null, "Successfully Signed up");
@@ -137,8 +138,7 @@ public class Signup extends JFrame {
 						JOptionPane.showMessageDialog(null, "password does not match");
 					}
 					
-					pst4.close();
-					connectDB.close();
+					
 				}
 					catch(Exception e1) {
 						JOptionPane.showMessageDialog(null, "error");

@@ -133,9 +133,7 @@ public class SearchCustomers extends JFrame {
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
 					model.setRowCount(0);
 					
-					if(rs1.next() == false) {
-						JOptionPane.showMessageDialog(null, "Customer record not found");
-					}
+					
 						while(rs1.next()) {
 							
 							String email = rs1.getString("email");

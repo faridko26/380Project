@@ -94,15 +94,17 @@ public class ManagerSignUp extends JFrame {
 					
 						
 						stmt.executeUpdate();
+						
 						JOptionPane.showMessageDialog(null, "Successfully Signed up");
 						dispose();
+						stmt.close();
+						connectDB.close();
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "password does not match");
 					}
 					
-					stmt.close();
-					connectDB.close();
+					
 				}
 					catch(Exception e1) {
 						JOptionPane.showMessageDialog(null, "error");

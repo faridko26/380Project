@@ -110,7 +110,7 @@ public class Addflight extends JFrame {
 						
 						
 						JOptionPane.showMessageDialog(null, "Successfully Added");
-						dispose();
+						//dispose();
 					
 					
 					pst5.close();

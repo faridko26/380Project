@@ -133,6 +133,17 @@ public class UserHome extends JFrame {
 		panel.add(Profile_btn);
 		
 		JButton Mybooking_btn = new JButton("Mybooking");
+		Mybooking_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Session bookingSession = new Session(s.getUsername(),s.getName(),s.getLastname(),s.getEmail(), s.getCus_id());
+				MyBooking frame = new MyBooking(bookingSession);
+				frame.setVisible(true);
+				
+				
+				
+			}
+		});
 		Mybooking_btn.setBounds(436, 99, 113, 41);
 		panel.add(Mybooking_btn);
 		
