@@ -32,26 +32,12 @@ public class Profile extends JFrame {
 	JRadioButton rdbtnMale;
 	JRadioButton rdbtnFemale;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Profile frame = new Profile();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public Profile() {
+	public Profile(Session s) {
 		setResizable(false);
 		
 		
@@ -100,7 +86,7 @@ public class Profile extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int id = Integer.parseInt(Login.customer_id);
+				int id = Integer.parseInt(s.getCus_id());
 				
 				PreparedStatement pst4 = null;
 				DatabaseConnection connect3 = new DatabaseConnection();

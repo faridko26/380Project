@@ -24,17 +24,12 @@ import java.sql.ResultSet;
 
 public class Login extends JFrame {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JTextField usernameField;
 	private JPasswordField passwordField;
-	static String customer_id; 
-	static String name;
-	static String lastname;
-	static String email;
+	
 	
 	
 	PreparedStatement pst1;
@@ -119,25 +114,22 @@ public class Login extends JFrame {
 				pst2.setString(2, password);
 				ResultSet rs3 = pst2.executeQuery();
 				
-				if(rs3.next()) {
-				customer_id = rs3.getString("cus_id");
-				name = rs3.getString("firstname");
-				lastname = rs3.getString("lastname");
-				email = rs3.getString("email");
 				
-				
-				}
 				
 				if(rs1.next()) { //admin login
+					
+					Session adminSession = new Session(rs1.getString("admin_username"),rs1.getString("firstname"),rs1.getString("lastname"),rs1.getString("admin_email"), rs1.getString("admin_id"));
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
-					ManagerHome frame = new ManagerHome();
+					ManagerHome frame = new ManagerHome(adminSession);
 					frame.setVisible(true);
 				}
 				else if(rs2.next()) { //user login
+					
+					Session userSession = new Session(rs2.getString("username"), rs2.getString("firstname"), rs2.getString("lastname"), rs2.getString("email"), rs2.getString("cus_id"));
 					dispose();
 					JOptionPane.showMessageDialog(null, "Login Successfully");
-					UserHome frame = new UserHome();
+					UserHome frame = new UserHome(userSession);
 					
 					
 					frame.setVisible(true);

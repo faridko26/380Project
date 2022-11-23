@@ -57,26 +57,12 @@ public class Flights extends JFrame {
 	//private JLabel LabelLastname;
 	//private JLabel LabelEmail;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Flights frame = new Flights();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public Flights() {
+	public Flights(Airline.Session flightSession) {
 		setTitle("Book Flight");
 		
 		
@@ -265,17 +251,17 @@ public class Flights extends JFrame {
 		JLabel LabelFirstname = new JLabel("New label");
 		LabelFirstname.setBounds(135, 69, 117, 14);
 		panel_1.add(LabelFirstname);
-		LabelFirstname.setText(Login.name);
+		LabelFirstname.setText(flightSession.getName());
 		
 		JLabel LabelLastname = new JLabel("New label");
 		LabelLastname.setBounds(135, 105, 117, 14);
 		panel_1.add(LabelLastname);
-		LabelLastname.setText(Login.lastname);
+		LabelLastname.setText(flightSession.getLastname());
 		
 		JLabel LabelEmail = new JLabel("New label");
 		LabelEmail.setBounds(135, 142, 117, 14);
 		panel_1.add(LabelEmail);
-		LabelEmail.setText(Login.email);
+		LabelEmail.setText(flightSession.getEmail());
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Book Flight:");
 		lblNewLabel_1_1.setForeground(Color.RED);
@@ -319,7 +305,7 @@ public class Flights extends JFrame {
 				String SeatsNumber = seats.getValue().toString();
 				LocalDate Date = java.time.LocalDate.now();
 				String Booked_date = Date.toString();
-				int cusid = Integer.parseInt(Login.customer_id);
+				int cusid = Integer.parseInt(flightSession.getCus_id());
 				
 				DatabaseConnection connectNow1 = new DatabaseConnection();
 		        Connection connectDB1 = connectNow1.getConnection();
@@ -375,7 +361,7 @@ public class Flights extends JFrame {
 							
 							SendEmail email = new SendEmail();
 							String msg="your ticket is booked";
-							email.send(Login.email,msg);
+							email.send(flightSession.getEmail(),msg);
 							
 							
 						JOptionPane.showMessageDialog(null, "Successfully Booked and Confirmation Email was sent");

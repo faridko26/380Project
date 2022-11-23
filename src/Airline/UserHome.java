@@ -23,28 +23,14 @@ public class UserHome extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserHome frame = new UserHome();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public UserHome() {
+	public UserHome(Session s) {
+		setTitle(s.getUsername() + " - User Home");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 940, 610);
+		setBounds(100, 100, 694, 341);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -53,7 +39,7 @@ public class UserHome extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(44, 108, 148));
-		panel.setBounds(0, 0, 924, 571);
+		panel.setBounds(0, 0, 794, 466);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -65,12 +51,15 @@ public class UserHome extends JFrame {
 		JButton Flights_btn = new JButton("Flights");
 		Flights_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Flights book = new Flights();
+				
+
+				Session flightSession = new Session(s.getUsername(),s.getName(),s.getLastname(),s.getEmail(), s.getCus_id());
+				Flights book = new Flights(flightSession);
 				book.setVisible(true);
 				
 			}
 		});
-		Flights_btn.setBounds(176, 241, 113, 41);
+		Flights_btn.setBounds(84, 99, 113, 41);
 		panel.add(Flights_btn);
 		
 		
@@ -79,10 +68,10 @@ public class UserHome extends JFrame {
 		Profile_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Profile myprofile = new Profile();
+				Profile myprofile = new Profile(s);
 				
 
-				int id = Integer.parseInt(Login.customer_id);
+				int id = Integer.parseInt(s.getCus_id());
 				
 				PreparedStatement pst3;
 				DatabaseConnection connect2 = new DatabaseConnection();
@@ -140,12 +129,23 @@ public class UserHome extends JFrame {
 			    myprofile.setVisible(true);
 			}
 		});
-		Profile_btn.setBounds(391, 241, 113, 41);
+		Profile_btn.setBounds(259, 99, 113, 41);
 		panel.add(Profile_btn);
 		
 		JButton Mybooking_btn = new JButton("Mybooking");
-		Mybooking_btn.setBounds(597, 241, 113, 41);
+		Mybooking_btn.setBounds(436, 99, 113, 41);
 		panel.add(Mybooking_btn);
+		
+		JButton btnNewButton = new JButton("Log Out");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Login frame = new Login();
+				frame.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(557, 254, 89, 23);
+		panel.add(btnNewButton);
 		
 	
 	}
