@@ -1,9 +1,9 @@
 package Airline;
 
-import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,35 +17,55 @@ import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Profile extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	JTextField name;
-	JTextField lastname;
-	JTextField age;
-	JTextField phonenumber;
-	JTextField email;
-	JTextField user;
+	private JTextField name;
+	private JTextField lastname;
+	private JTextField age;
+	private JTextField phonenumber;
+	private JTextField email;
+	private JTextField user;
 	private JPasswordField password;
 	private JPasswordField confirmNewpass;
-	JRadioButton rdbtnMale;
-	JRadioButton rdbtnFemale;
-
+	private JRadioButton rdbtnMale;
+	private JRadioButton rdbtnFemale;
+	
 
 
 	/**
 	 * Create the frame.
 	 */
-	public Profile(Session s) {
+	public Profile(Session profileSession) {
+		
+		
+		
 		setResizable(false);
 		
-		
-		
-		
-		
-		
-		
+		DatabaseConnection connect3 = new DatabaseConnection();
+        Connection connectprofile = connect3.getConnection();
+        
+        
+        addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					connectprofile.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+        
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 396, 414);
 		contentPane = new JPanel();
@@ -86,12 +106,9 @@ public class Profile extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int id = Integer.parseInt(s.getCus_id());
+				
 				
 				PreparedStatement pst4 = null;
-				DatabaseConnection connect3 = new DatabaseConnection();
-		        Connection connectprofile = connect3.getConnection();
-		        
 		        String firstname1 = name.getText();
 			    String lastname1 = lastname.getText();
 			    String gender;
@@ -99,7 +116,7 @@ public class Profile extends JFrame {
 			    
 				if(rdbtnMale.isSelected()) {
 			    	gender = "Male";
-			    	rdbtnFemale.disable();
+			    	rdbtnFemale.setSelected(false);
 			    	
 			    }
 			    else {
@@ -119,8 +136,13 @@ public class Profile extends JFrame {
 		        
 				
 				try {
+				
+					if(password1.isEmpty() || confirmpassword1.isEmpty() || firstname1.isEmpty() || lastname1.isEmpty() || phonenumber1.isEmpty() || email1.isEmpty() || username1.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Please fill out all fields");
+					}
+					else {
 					
-				if(password1.equals(confirmpassword1)) {
+						if(password1.equals(confirmpassword1)) {
 					String query4="update customers set firstname=?, lastname=?,gender=?,age=?,phonenumber=?,email=?,username=?,password=? where cus_id =?";
 					pst4= connectprofile.prepareStatement(query4);
 					//pst4.setInt(1, id);
@@ -134,22 +156,20 @@ public class Profile extends JFrame {
 					pst4.setString(6,email1);
 					pst4.setString(7,username1);
 					pst4.setString(8,password1);
-					pst4.setInt(9,id);
+					pst4.setInt(9,Integer.parseInt(profileSession.getCus_id()));
 					
 					pst4.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Successfully updated");
 					dispose();
+					pst4.close();
 				}
 				
 				else {
 					JOptionPane.showMessageDialog(null, "password does not match");
 				}
 					
+					}
 				
-				
-				pst4.close();
-				
-				connectprofile.close();
 				
 				}
 				catch(Exception e1) {
@@ -226,5 +246,59 @@ public class Profile extends JFrame {
 		ButtonGroup btnBg = new ButtonGroup();  
 	    btnBg.add(rdbtnMale);
 	    btnBg.add(rdbtnFemale); 
+	    
+	    
+	    PreparedStatement pst3;
+		
+		
+		try {
+			
+
+		String query3="select * from customers where cus_id = ?";
+		pst3= connectprofile.prepareStatement(query3);
+		pst3.setInt(1, Integer.parseInt(profileSession.getCus_id()));
+		
+		ResultSet rs4 = pst3.executeQuery();
+		
+		
+		if(rs4.next()==false) {
+			JOptionPane.showMessageDialog(null, "Record not found");
+			
+		}
+		
+		
+		else {
+			
+			name.setText( rs4.getString("firstname"));
+			lastname.setText( rs4.getString("lastname"));
+			
+			String gender = rs4.getString("gender");
+			if(gender.equals("Male")) {
+				rdbtnMale.setSelected(true);
+				rdbtnFemale.setSelected(false);
+			}
+			else {
+				rdbtnMale.setSelected(false);
+				rdbtnFemale.setSelected(true);
+			}
+			
+			
+			age.setText( rs4.getString("age"));
+			phonenumber.setText( rs4.getString("phonenumber"));
+			email.setText( rs4.getString("email"));
+			user.setText( rs4.getString("username"));
+			
+		}
+		
+		pst3.close();
+		
+		
+		
+	}
+		catch(Exception e1) {
+			JOptionPane.showMessageDialog(null, "error");
+		}
+		
+	  
 	}
 }

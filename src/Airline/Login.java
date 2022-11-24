@@ -29,11 +29,8 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private static JTextField usernameField;
 	private JPasswordField passwordField;
-	
-	
-	
-	PreparedStatement pst1;
-	PreparedStatement pst2;
+	private PreparedStatement pst1;
+	private PreparedStatement pst2;
 	
 	//Launch the Application
 	public static void main(String[] args) {
@@ -108,11 +105,7 @@ public class Login extends JFrame {
 				pst2.setString(2, password);
 				ResultSet rs2 = pst2.executeQuery();
 				
-				String query3="select * from customers where username =? and password =?";
-				pst2= connectDB.prepareStatement(query3);
-				pst2.setString(1,  username);
-				pst2.setString(2, password);
-				ResultSet rs3 = pst2.executeQuery();
+				
 				
 				
 				

@@ -6,13 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -32,6 +29,10 @@ import com.toedter.calendar.JDateChooser;
 
 public class EditFlight extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 	private JButton btnNewButton;
@@ -42,8 +43,8 @@ public class EditFlight extends JFrame {
 	private JTextField textSeats;
 	private JLabel lblFlightId;
 	private JLabel labelFlightid;
-	private JComboBox Totxt;
-	private JComboBox  Fromtxt;
+	private JComboBox<Object> Totxt;
+	private JComboBox<Object>  Fromtxt;
 	private JDateChooser textdateChooser;
 
 
@@ -148,8 +149,6 @@ public class EditFlight extends JFrame {
 						pst11.executeUpdate();
 							
 						
-							
-							
 						JOptionPane.showMessageDialog(null, "Successfully Deleted the selected flight");
 						
 						String query5="select * from flight";
@@ -363,13 +362,13 @@ public class EditFlight extends JFrame {
 		labelFlightid.setBounds(115, 206, 86, 14);
 		contentPane.add(labelFlightid);
 		
-		Fromtxt = new JComboBox();
-		Fromtxt.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
+		Fromtxt = new JComboBox<Object>();
+		Fromtxt.setModel(new DefaultComboBoxModel<Object>(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
 		Fromtxt.setBounds(115, 252, 113, 22);
 		contentPane.add(Fromtxt);
 		
-		Totxt = new JComboBox();
-		Totxt.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
+		Totxt = new JComboBox<Object>();
+		Totxt.setModel(new DefaultComboBoxModel<Object>(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
 		Totxt.setBounds(115, 277, 113, 22);
 		contentPane.add(Totxt);
 		

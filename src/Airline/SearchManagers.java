@@ -1,12 +1,9 @@
 package Airline;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,20 +12,19 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
 public class SearchManagers extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField tfUser;
 	private final JButton btnSearch = new JButton("Search");
 	
@@ -118,10 +114,7 @@ public class SearchManagers extends JFrame {
 					pst1.setString(2,  lasttname);
 					ResultSet rs1 = pst1.executeQuery();
 					
-					ResultSetMetaData rs5m = rs1.getMetaData();
-					
-					int c;
-					c = rs5m.getColumnCount();
+				
 					
 					
 					

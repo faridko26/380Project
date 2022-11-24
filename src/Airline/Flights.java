@@ -1,47 +1,32 @@
 package Airline;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JComboBox;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
-import java.awt.ScrollPane;
 import javax.swing.JButton;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Properties;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.PasswordAuthentication;
-
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.SpinnerNumberModel;
@@ -49,6 +34,10 @@ import javax.swing.SpinnerNumberModel;
 public class Flights extends JFrame {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 
@@ -62,7 +51,7 @@ public class Flights extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Flights(Airline.Session flightSession) {
+	public Flights(Session flightSession) {
 		setTitle("Book Flight");
 		
 		
@@ -88,13 +77,13 @@ public class Flights extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JComboBox comboBoxFrom = new JComboBox();
-		comboBoxFrom.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
+		JComboBox<Object> comboBoxFrom = new JComboBox<Object>();
+		comboBoxFrom.setModel(new DefaultComboBoxModel<Object>(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
 		comboBoxFrom.setBounds(10, 49, 120, 22);
 		panel.add(comboBoxFrom);
 		
-		JComboBox comboBoxTo = new JComboBox();
-		comboBoxTo.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
+		JComboBox<Object> comboBoxTo = new JComboBox<Object>();
+		comboBoxTo.setModel(new DefaultComboBoxModel<Object>(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
 		comboBoxTo.setBounds(184, 49, 120, 22);
 		panel.add(comboBoxTo);
 		

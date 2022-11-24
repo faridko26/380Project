@@ -1,26 +1,20 @@
 package Airline;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JDesktopPane;
 import java.awt.Color;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 
 public class UserHome extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 
@@ -53,8 +47,8 @@ public class UserHome extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 
-				Session flightSession = new Session(s.getUsername(),s.getName(),s.getLastname(),s.getEmail(), s.getCus_id());
-				Flights book = new Flights(flightSession);
+				//Session flightSession = new Session(s.getUsername(),s.getName(),s.getLastname(),s.getEmail(), s.getCus_id());
+				Flights book = new Flights(s);
 				book.setVisible(true);
 				
 			}
@@ -68,65 +62,11 @@ public class UserHome extends JFrame {
 		Profile_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				//Session profileSession = new Session(s.getUsername(),s.getName(),s.getLastname(),s.getEmail(), s.getCus_id());
 				Profile myprofile = new Profile(s);
-				
+				myprofile.setVisible(true);
+				  
 
-				int id = Integer.parseInt(s.getCus_id());
-				
-				PreparedStatement pst3;
-				DatabaseConnection connect2 = new DatabaseConnection();
-		        Connection connectprofile = connect2.getConnection();
-		        
-				
-				try {
-					
-
-				String query3="select * from customers where cus_id = ?";
-				pst3= connectprofile.prepareStatement(query3);
-				pst3.setInt(1, id);
-				
-				ResultSet rs4 = pst3.executeQuery();
-				
-				
-				if(rs4.next()==false) {
-					JOptionPane.showMessageDialog(null, "Record not found");
-					
-				}
-				
-				
-				else {
-					
-					myprofile.name.setText( rs4.getString("firstname"));
-					myprofile.lastname.setText( rs4.getString("lastname"));
-					
-					String gender = rs4.getString("gender");
-					if(gender.equals("Male")) {
-						myprofile.rdbtnMale.setSelected(true);
-						myprofile.rdbtnFemale.setSelected(false);
-					}
-					else {
-						myprofile.rdbtnMale.setSelected(false);
-						myprofile.rdbtnFemale.setSelected(true);
-					}
-					
-					
-					myprofile.age.setText( rs4.getString("age"));
-					myprofile.phonenumber.setText( rs4.getString("phonenumber"));
-					myprofile.email.setText( rs4.getString("email"));
-					myprofile.user.setText( rs4.getString("username"));
-					
-				}
-				
-				pst3.close();
-				
-				connectprofile.close();
-				
-			}
-				catch(Exception e1) {
-					JOptionPane.showMessageDialog(null, "error");
-				}
-				
-			    myprofile.setVisible(true);
 			}
 		});
 		Profile_btn.setBounds(259, 99, 113, 41);
@@ -136,8 +76,8 @@ public class UserHome extends JFrame {
 		Mybooking_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Session bookingSession = new Session(s.getUsername(),s.getName(),s.getLastname(),s.getEmail(), s.getCus_id());
-				MyBooking frame = new MyBooking(bookingSession);
+				//Session bookingSession = new Session(s.getUsername(),s.getName(),s.getLastname(),s.getEmail(), s.getCus_id());
+				MyBooking frame = new MyBooking(s);
 				frame.setVisible(true);
 				
 				
