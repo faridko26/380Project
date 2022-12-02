@@ -45,18 +45,6 @@ public class ManagerHome extends JFrame {
 		JMenu mnNewMenu = new JMenu("Customer");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem MenuAddCustomer = new JMenuItem("Add Customer");
-		mnNewMenu.add(MenuAddCustomer);
-		MenuAddCustomer.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				
-				Signup frame = new Signup();
-				frame.setVisible(true);
-			}
-			
-		});
-		
 		JMenuItem MenuSearchCustomer = new JMenuItem("Search Customer");
 		mnNewMenu.add(MenuSearchCustomer);
 		MenuSearchCustomer.addActionListener(new ActionListener() {
