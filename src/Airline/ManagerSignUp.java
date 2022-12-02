@@ -4,8 +4,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +30,7 @@ public class ManagerSignUp extends JFrame {
 
 	//Create the frame
 	public ManagerSignUp() {
+		setIconImage(new ImageIcon(getClass().getResource("plane_icon.png")).getImage());
 		setTitle("Manager Sign Up");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 323, 321);
@@ -66,8 +69,8 @@ public class ManagerSignUp extends JFrame {
 		JButton btnNewButton = new JButton("Signup");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Connection c = null;
-			    Statement stmt = null;
+				
+				PreparedStatement stmt = null;
 				String username = username1.getText();
 				String password = String.valueOf(password1.getPassword());
 				String fname = textField.getText();
@@ -79,20 +82,31 @@ public class ManagerSignUp extends JFrame {
 				
 				try {
 					
-					stmt=connectDB.createStatement();
+					
 					if(password.equals(confirmpassword)) {
 						String query="insert into admin (admin_username,admin_password,firstname,lastname,admin_email) "
-								+ "values('"+username+"', '"+password+"', '"+fname+"', '"+lname+"', '"+email+"')";
-						stmt.executeUpdate(query);
+								+ "values(?, ?, ?, ?, ?)";
+						stmt= connectDB.prepareStatement(query);
+						stmt.setString(1,  username);
+						stmt.setString(2, password);
+						stmt.setString(3,  fname);
+						stmt.setString(4, lname);
+						stmt.setString(5, email);
+					
+					
+						
+						stmt.executeUpdate();
+						
 						JOptionPane.showMessageDialog(null, "Successfully Signed up");
 						dispose();
+						stmt.close();
+						connectDB.close();
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "password does not match");
 					}
 					
-					stmt.close();
-					connectDB.close();
+					
 				}
 					catch(Exception e1) {
 						JOptionPane.showMessageDialog(null, "error");

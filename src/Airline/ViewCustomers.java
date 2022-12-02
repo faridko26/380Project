@@ -2,6 +2,7 @@ package Airline;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,53 +18,20 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 
-<<<<<<< Updated upstream
 public class ViewCustomers extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewCustomers frame = new ViewCustomers();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-=======
-		    return conn;
-		}
-	 //create frame
-	    public ViewCustomers() {
-	    	setResizable(false);
-	    	
-	    	try {
-	    		con=getConnection();
-	    		
-	    		//Selects data from users table
-		    	String query1="select * from customers"; 
-				pst1= con.prepareStatement(query1);
-				ResultSet rs1 = pst1.executeQuery();
-				
-				//Inserts each name in 'username' column into list
-				DefaultListModel<String> listModel = new DefaultListModel<>();
-				while(rs1.next()) {
-					listModel.addElement(rs1.getString("username"));
->>>>>>> Stashed changes
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
 	public ViewCustomers() {
+		setIconImage(new ImageIcon(getClass().getResource("plane_icon.png")).getImage());
+		setResizable(false);
 		setTitle("View Customers");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 746, 444);
@@ -114,7 +82,7 @@ public class ViewCustomers extends JFrame {
 			
 			for (int i = 1; i<=c; i++) {
 				
-				v2.add(rs5.getString("id"));
+				v2.add(rs5.getString("cus_id"));
 				v2.add(rs5.getString("firstname"));
 				v2.add(rs5.getString("lastname"));
 				v2.add(rs5.getString("gender"));

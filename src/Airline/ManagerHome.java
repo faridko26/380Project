@@ -1,10 +1,13 @@
 package Airline;
 
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -13,6 +16,8 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -21,6 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.swing.border.BevelBorder;
+import javax.swing.JLabel;
 
 public class ManagerHome extends JFrame {
 
@@ -31,20 +37,12 @@ public class ManagerHome extends JFrame {
 	PreparedStatement pst2;
 
 
-	public static Connection getConnection() throws URISyntaxException, SQLException {
-	    URI dbUri = new URI("postgres://sddbvrkvkbkbcz:61bdd3cfd6dcad474f70747d694116ca58f7cef4cff3986bdba0e7fa15a54317@ec2-44-209-158-64.compute-1.amazonaws.com:5432/dovqiu3kter09");
-	    
-	    Connection conn;
-	    String username = dbUri.getUserInfo().split(":")[0];
-	    String password = dbUri.getUserInfo().split(":")[1];
-	    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-	    conn=DriverManager.getConnection(dbUrl, username, password);
 
-	    return conn;
-	}
 	
 	//Create Frame
 	public ManagerHome(Session s) {
+		setIconImage(new ImageIcon(getClass().getResource("plane_icon.png")).getImage());
+		setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 990, 590);
@@ -107,6 +105,16 @@ public class ManagerHome extends JFrame {
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Edit Flight");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditFlight edit = new EditFlight(s);
+				edit.setVisible(true);
+				
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem);
+		
 		//User Menu
 		JMenu mnNewMenu_2 = new JMenu("User");
 		menuBar.add(mnNewMenu_2);
@@ -131,8 +139,8 @@ public class ManagerHome extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				SearchManagers search = new SearchManagers(s);
+				search.setVisible(true);
 			}
 		});
 		
@@ -153,23 +161,28 @@ public class ManagerHome extends JFrame {
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setForeground(new Color(128, 128, 255));
-		panel.setBackground(new Color(192, 192, 192));
-		panel.setBounds(0, 0, 984, 529);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		JLabel label = new JLabel();
+		label.setBounds(0, 0, 980, 551);
+		contentPane.add(label);
+		BufferedImage img = null;
+		img = (BufferedImage) getImage("background2.jpg");
 		
-		JDesktopPane desktopPane = new JDesktopPane();
-		desktopPane.setForeground(new Color(128, 128, 255));
-		desktopPane.setBackground(new Color(128, 128, 255));
-		desktopPane.setBounds(0, 523, 974, -522);
-		panel.add(desktopPane);
+		Image resizedImage = img.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imageIcon = new ImageIcon(resizedImage);
 		
+		label.setIcon(imageIcon);
+		
+	}
+	public Image getImage(String filename) {
+		try {
+	        return ImageIO.read(getClass().getResourceAsStream(
+	                "/" + filename));
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 }

@@ -28,7 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-public class SearchCustomers extends JFrame {
+public class SearchManagers extends JFrame {
 	
 	private JTextField tfUser;
 	private final JButton btnSearch = new JButton("Search");
@@ -39,7 +39,7 @@ public class SearchCustomers extends JFrame {
 	
 		
 	//create frame
-	public SearchCustomers(Session s) {
+	public SearchManagers(Session s) {
 		setIconImage(new ImageIcon(getClass().getResource("plane_icon.png")).getImage());
 		setBounds(100,150,830,626);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,19 +70,14 @@ public class SearchCustomers extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"username", "email", "phonenumber", "age", "gender", "lastname", "firstname", "Cus_id"
+				"First Name", "Last Name", "Email", "User Name", "Admin ID"
 			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				true, true, true, true, true, true, true, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		table.getColumnModel().getColumn(1).setPreferredWidth(132);
-		table.getColumnModel().getColumn(2).setPreferredWidth(119);
-		table.getColumnModel().getColumn(3).setPreferredWidth(63);
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(131);
+		table.getColumnModel().getColumn(1).setPreferredWidth(124);
+		table.getColumnModel().getColumn(2).setPreferredWidth(139);
+		table.getColumnModel().getColumn(3).setPreferredWidth(105);
+		table.getColumnModel().getColumn(4).setPreferredWidth(92);
 		scrollPane.setViewportView(table);
 		
 		tfUser = new JTextField();
@@ -118,7 +113,7 @@ public class SearchCustomers extends JFrame {
 				
 				try {
 					
-					String query1="select * from customers where firstname =? and lastname =?";
+					String query1="select * from admin where firstname =? and lastname =?";
 					pst1= connectDB.prepareStatement(query1);
 					pst1.setString(1,  firstname);
 					pst1.setString(2,  lasttname);
@@ -137,17 +132,14 @@ public class SearchCustomers extends JFrame {
 					
 						while(rs1.next()) {
 							
-							String email = rs1.getString("email");
-							String phonenumber = rs1.getString("phonenumber");
-							String age = rs1.getString("age");
-							String gender = rs1.getString("gender");
-							String lastname = rs1.getString("lastname");
 							String fname = rs1.getString("firstname");
-							String username = rs1.getString("username");
-							String cus_id = rs1.getString("cus_id");
+							String lname = rs1.getString("lastname");
+							String email = rs1.getString("admin_email");
+							String user = rs1.getString("admin_username");
+							String admin_id = rs1.getString("admin_id");
 							
 							
-							model.addRow(new Object[]{username, email, phonenumber, age, gender, lastname, fname,cus_id});
+							model.addRow(new Object[]{fname, lname, email, user,admin_id});
 						}
 					
 					
