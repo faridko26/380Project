@@ -21,22 +21,26 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.SpinnerDateModel;
+import java.util.Date;
+import java.util.Calendar;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerModel;
 
 public class Addflight extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField Flight_No;
-	private JTextField Departure_time;
-	private JTextField Price;
-	private JTextField Seat;
-	private JTextField Arrival_time;
 	private JComboBox Fromtxt;
 	private JComboBox Totxt;
 	private JDateChooser Departure_date;
-	
-	
-
-
+	private JSpinner priceSpinner;
+	private JSpinner seatSpinner;
+	private JSpinner departSpinner;
+	private JSpinner arriveSpinner;
 
 	/**
 	 * Create the frame.
@@ -65,13 +69,22 @@ public class Addflight extends JFrame {
 				String FlightNo = Flight_No.getText();
 				String From = Fromtxt.getSelectedItem().toString();
 				String To = Totxt.getSelectedItem().toString();
-				String Dep_time = Departure_time.getText();
-				String Arr_time = Arrival_time.getText();
+				
+				Object depValue = departSpinner.getValue();
+				Date depDate = (Date)depValue;
+				SimpleDateFormat format1 = new SimpleDateFormat("hh:mm aa");
+				String Dep_time = format1.format(depDate);
+				
+				
+				Object arrValue = arriveSpinner.getValue();
+				Date arrDate = (Date)arrValue;
+				SimpleDateFormat format2 = new SimpleDateFormat("hh:mm aa");
+				String Arr_time = format2.format(arrDate);
 				
 				
 				String Dep_date = ((JTextField)Departure_date.getDateEditor().getUiComponent()).getText();
-				String Cost = Price.getText();
-				String seats = Seat.getText();
+				String Cost = priceSpinner.getValue().toString();
+				String seats = seatSpinner.getValue().toString();
 				
 				DatabaseConnection connectNow1 = new DatabaseConnection();
 		        Connection connectDB1 = connectNow1.getConnection();
@@ -79,9 +92,6 @@ public class Addflight extends JFrame {
 		        
 		       
 		        try {
-					
-						
-						
 						String query6 ="insert into flight(flightnumber,origin,destination,departuretime,arrivaltime,departuredate,price,seats,availableseats) values(?,?,?,?,?,?,?,?,?)";
 								
 						
@@ -125,75 +135,88 @@ public class Addflight extends JFrame {
 		panel.add(btnCancel);
 		
 		JLabel lblNewLabel = new JLabel("Flight Number");
-		lblNewLabel.setBounds(44, 45, 89, 14);
+		lblNewLabel.setBounds(44, 40, 89, 26);
 		panel.add(lblNewLabel);
 		
 		JLabel lblFrom = new JLabel("From");
-		lblFrom.setBounds(44, 83, 89, 14);
+		lblFrom.setBounds(44, 80, 89, 26);
 		panel.add(lblFrom);
 		
 		JLabel lblTo = new JLabel("To");
-		lblTo.setBounds(44, 127, 89, 14);
+		lblTo.setBounds(44, 120, 89, 26);
 		panel.add(lblTo);
 		
 		JLabel lblDepartureTime = new JLabel("Departure Time");
-		lblDepartureTime.setBounds(44, 170, 89, 14);
+		lblDepartureTime.setBounds(44, 160, 89, 26);
 		panel.add(lblDepartureTime);
 		
 		JLabel lblDepartureDate = new JLabel("Arrival Time");
-		lblDepartureDate.setBounds(44, 212, 89, 14);
+		lblDepartureDate.setBounds(44, 200, 89, 26);
 		panel.add(lblDepartureDate);
 		
 		JLabel lblPrice = new JLabel("Price");
-		lblPrice.setBounds(44, 306, 89, 14);
+		lblPrice.setBounds(44, 280, 89, 26);
 		panel.add(lblPrice);
 		
 		Flight_No = new JTextField();
-		Flight_No.setBounds(166, 42, 125, 20);
+		Flight_No.setBounds(166, 40, 125, 28);
 		panel.add(Flight_No);
 		Flight_No.setColumns(10);
 		
-		Departure_time = new JTextField();
-		Departure_time.setColumns(10);
-		Departure_time.setBounds(166, 167, 125, 20);
-		panel.add(Departure_time);
-		
-		Price = new JTextField();
-		Price.setColumns(10);
-		Price.setBounds(166, 303, 125, 20);
-		panel.add(Price);
-		
 		Departure_date = new JDateChooser();
 		Departure_date.setDateFormatString("MM-dd-yyyy");
-		Departure_date.setBounds(166, 250, 125, 20);
+		Departure_date.setBounds(166, 240, 125, 28);
 		panel.add(Departure_date);
 		
-		JLabel lblNewLabel_1 = new JLabel("Seat");
-		lblNewLabel_1.setBounds(44, 355, 46, 14);
+		JLabel lblNewLabel_1 = new JLabel("Seats");
+		lblNewLabel_1.setBounds(44, 320, 46, 26);
 		panel.add(lblNewLabel_1);
 		
-		Seat = new JTextField();
-		Seat.setBounds(166, 352, 125, 20);
-		panel.add(Seat);
-		Seat.setColumns(10);
-		
 		Fromtxt = new JComboBox();
-		Fromtxt.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
-		Fromtxt.setBounds(166, 79, 125, 22);
+		Fromtxt.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diego"}));
+		Fromtxt.setBounds(166, 80, 125, 28);
 		panel.add(Fromtxt);
 		
 		Totxt = new JComboBox();
-		Totxt.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
-		Totxt.setBounds(166, 123, 125, 22);
+		Totxt.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diego"}));
+		Totxt.setBounds(166, 120, 125, 28);
 		panel.add(Totxt);
 		
 		JLabel lblDepartureDate_1 = new JLabel("Departure Date");
-		lblDepartureDate_1.setBounds(44, 256, 89, 14);
+		lblDepartureDate_1.setBounds(44, 240, 89, 26);
 		panel.add(lblDepartureDate_1);
 		
-		Arrival_time = new JTextField();
-		Arrival_time.setColumns(10);
-		Arrival_time.setBounds(166, 209, 125, 20);
-		panel.add(Arrival_time);
+		JLabel lblNewLabel_2 = new JLabel("$");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setBounds(125, 280, 38, 26);
+		panel.add(lblNewLabel_2);
+		
+		priceSpinner = new JSpinner();
+		lblNewLabel_2.setLabelFor(priceSpinner);
+		priceSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(10)));
+		priceSpinner.setBounds(166, 280, 125, 28);
+		panel.add(priceSpinner);
+		
+		seatSpinner = new JSpinner();
+		seatSpinner.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+		seatSpinner.setBounds(166, 320, 125, 28);
+		panel.add(seatSpinner);
+		
+		
+		Date date1 = new Date();
+		
+		SpinnerDateModel sm = new SpinnerDateModel(date1, null, null, Calendar.MINUTE);
+		departSpinner = new JSpinner(sm);
+		JSpinner.DateEditor de = new JSpinner.DateEditor(departSpinner,"hh:mm aa");
+		departSpinner.setEditor(de);
+		departSpinner.setBounds(166, 159, 125, 28);
+		panel.add(departSpinner);
+		
+		SpinnerDateModel sm2 = new SpinnerDateModel(date1, null, null, Calendar.MINUTE);
+		arriveSpinner = new JSpinner(sm2);
+		JSpinner.DateEditor de2 = new JSpinner.DateEditor(arriveSpinner,"hh:mm aa");
+		arriveSpinner.setEditor(de2);
+		arriveSpinner.setBounds(166, 199, 125, 28);
+		panel.add(arriveSpinner);
 	}
 }

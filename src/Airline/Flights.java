@@ -89,12 +89,12 @@ public class Flights extends JFrame {
 		panel_1.setLayout(null);
 		
 		JComboBox comboBoxFrom = new JComboBox();
-		comboBoxFrom.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
+		comboBoxFrom.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diego"}));
 		comboBoxFrom.setBounds(10, 49, 120, 22);
 		panel.add(comboBoxFrom);
 		
 		JComboBox comboBoxTo = new JComboBox();
-		comboBoxTo.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diago"}));
+		comboBoxTo.setModel(new DefaultComboBoxModel(new String[] {"Los Angeles", "Las Vegas", "Denver", "Seattle", "San Francisco", "San Diego"}));
 		comboBoxTo.setBounds(184, 49, 120, 22);
 		panel.add(comboBoxTo);
 		
@@ -137,7 +137,6 @@ public class Flights extends JFrame {
 				DefaultTableModel DT = (DefaultTableModel)table.getModel();
 				DT.setRowCount(0);
 				
-		
 				
 				String query6="select * from flight where origin =? and destination =?";
 				pst6= connectDB.prepareStatement(query6);
@@ -151,10 +150,6 @@ public class Flights extends JFrame {
 				
 				int c;
 				c = rs6m.getColumnCount();
-				
-				
-				
-				
 				
 				while(rs6.next()) {
 					
@@ -177,18 +172,12 @@ public class Flights extends JFrame {
 					
 					DT.addRow(v2);
 				}
-				
-				
-				
-				
 				pst6.close();
 				connectDB.close();
 			}
 				catch(Exception e1) {
 					JOptionPane.showMessageDialog(null, "error");
-				}
-				
-				
+				}	
 			}
 		});
 		btnNewButton.setBounds(346, 114, 89, 23);
@@ -231,9 +220,9 @@ public class Flights extends JFrame {
 		
 		
 		JLabel lblNewLabel_1 = new JLabel("My Information:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setForeground(new Color(255, 0, 0));
-		lblNewLabel_1.setBounds(10, 29, 106, 14);
+		lblNewLabel_1.setFont(new Font("Segoe UI Historic", Font.BOLD, 14));
+		lblNewLabel_1.setForeground(Color.BLUE);
+		lblNewLabel_1.setBounds(10, 29, 106, 22);
 		panel_1.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("First Name :");
@@ -264,13 +253,13 @@ public class Flights extends JFrame {
 		LabelEmail.setText(flightSession.getEmail());
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Book Flight:");
-		lblNewLabel_1_1.setForeground(Color.RED);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_1.setForeground(Color.BLUE);
+		lblNewLabel_1_1.setFont(new Font("Segoe UI Historic", Font.BOLD, 14));
 		lblNewLabel_1_1.setBounds(10, 185, 106, 22);
 		panel_1.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("Flight No");
-		lblNewLabel_2_2.setBounds(43, 218, 73, 14);
+		lblNewLabel_2_2.setBounds(43, 218, 73, 22);
 		panel_1.add(lblNewLabel_2_2);
 		
 		JLabel lblNewLabel_2_2_1 = new JLabel("Seats");
@@ -292,7 +281,7 @@ public class Flights extends JFrame {
 				
 			}
 		});
-		seats.setBounds(137, 290, 65, 20);
+		seats.setBounds(137, 290, 65, 23);
 		panel_1.add(seats);
 		
 		JButton btnBook = new JButton("Book");
@@ -313,10 +302,7 @@ public class Flights extends JFrame {
 		        PreparedStatement pst9 = null;
 		        PreparedStatement pst10 = null;
 		        
-		       
 		        try {
-					
-						
 						String query8 = "select * from flight where flightnumber =?";
 						pst8= connectDB1.prepareStatement(query8);
 						pst8.setString(1,  flightno.getText());
@@ -339,11 +325,7 @@ public class Flights extends JFrame {
 							pst9.setString(3,  Totalprice);
 							pst9.setString(4, SeatsNumber);
 							pst9.setString(5, Booked_date);
-							System.out.print(cusid);
-							System.out.print(flightid);
-							System.out.printf(Totalprice);
-							System.out.printf(SeatsNumber);
-							System.out.printf(Booked_date);
+					
 							pst9.executeUpdate();
 							
 							String query10 = "update flight set availableseats=? where flight_id =?";	
@@ -381,12 +363,6 @@ public class Flights extends JFrame {
 						//JOptionPane.showMessageDialog(null, "error");
 					}
 				
-				
-				
-				
-				
-				
-				
 			}
 		});
 		btnBook.setBounds(43, 389, 89, 23);
@@ -420,17 +396,10 @@ public class Flights extends JFrame {
 		panel_1.add(labelprice_1);
 		
 		JLabel lblNewLabel_4 = new JLabel("Please select flight");
-		lblNewLabel_4.setForeground(new Color(255, 128, 0));
+		lblNewLabel_4.setFont(new Font("Segoe UI Historic", Font.BOLD, 14));
+		lblNewLabel_4.setForeground(Color.BLUE);
 		lblNewLabel_4.setBackground(new Color(255, 128, 0));
-		lblNewLabel_4.setBounds(10, 170, 199, 14);
+		lblNewLabel_4.setBounds(10, 164, 199, 20);
 		contentPane.add(lblNewLabel_4);
-		
-		
-		
-		
-		
-		
-		//
-		
 	}
 }

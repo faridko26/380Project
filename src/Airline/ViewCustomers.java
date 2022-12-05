@@ -23,8 +23,6 @@ public class ViewCustomers extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 
-
-
 	/**
 	 * Create the frame.
 	 */
@@ -42,7 +40,7 @@ public class ViewCustomers extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 64, 730, 341);
+		scrollPane.setBounds(0, 0, 730, 407);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -50,9 +48,10 @@ public class ViewCustomers extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "First Name", "Last Name", "Gender", "Age", "Phone Number", "Email"
+				"Id", "First Name", "Last Name", "Gender", "Date of birth", "Phone Number", "Email"
 			}
 		));
+		
 		table.getColumnModel().getColumn(5).setPreferredWidth(100);
 		scrollPane.setViewportView(table);
 		
@@ -61,51 +60,39 @@ public class ViewCustomers extends JFrame {
         PreparedStatement pst5;
 		
 		try {
+			String query5="select * from customers order by cus_id asc";
+			pst5= connectDB.prepareStatement(query5);
+		
+			ResultSet rs5 = pst5.executeQuery();
+			ResultSetMetaData rs5m = rs5.getMetaData();
 			
-
-		String query5="select * from customers";
-		pst5= connectDB.prepareStatement(query5);
-	
-		ResultSet rs5 = pst5.executeQuery();
-		
-		ResultSetMetaData rs5m = rs5.getMetaData();
-		
-		int c;
-		c = rs5m.getColumnCount();
-		
-		DefaultTableModel DT = (DefaultTableModel)table.getModel();
-		DT.setRowCount(0);
-		
-		while(rs5.next()) {
-			@SuppressWarnings("rawtypes")
-			Vector v2 = new Vector();
+			int c;
+			c = rs5m.getColumnCount();
 			
-			for (int i = 1; i<=c; i++) {
+			DefaultTableModel DT = (DefaultTableModel)table.getModel();
+			DT.setRowCount(0);
+			
+			while(rs5.next()) {
+				@SuppressWarnings("rawtypes")
+				Vector v2 = new Vector();
 				
-				v2.add(rs5.getString("cus_id"));
-				v2.add(rs5.getString("firstname"));
-				v2.add(rs5.getString("lastname"));
-				v2.add(rs5.getString("gender"));
-				v2.add(rs5.getString("age"));
-				v2.add(rs5.getString("phonenumber"));
-				v2.add(rs5.getString("email"));
-				
-				
+				for (int i = 1; i<=c; i++) {
+					
+					v2.add(rs5.getString("cus_id"));
+					v2.add(rs5.getString("firstname"));
+					v2.add(rs5.getString("lastname"));
+					v2.add(rs5.getString("gender"));
+					v2.add(rs5.getString("age"));
+					v2.add(rs5.getString("phonenumber"));
+					v2.add(rs5.getString("email"));
+				}
+				DT.addRow(v2);
 			}
-			
-			DT.addRow(v2);
-		}
-		
-		
-		
-		
-		pst5.close();
-		connectDB.close();
+			pst5.close();
+			connectDB.close();
 	}
 		catch(Exception e1) {
 			JOptionPane.showMessageDialog(null, "error");
 		}
-		
-		
 	}
 }

@@ -40,29 +40,22 @@ public class SearchManagers extends JFrame {
 		
 	//create frame
 	public SearchManagers(Session s) {
+		setTitle("Search Managers");
 		setIconImage(new ImageIcon(getClass().getResource("plane_icon.png")).getImage());
-		setBounds(100,150,830,626);
+		setBounds(100,100,830,590);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel = new JLabel("Search Customer");
-		panel.add(lblNewLabel);
-		
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
-		btnSearch.setBounds(534, 72, 119, 23);
+		btnSearch.setBounds(534, 50, 119, 28);
 		panel_1.add(btnSearch);
 		
-		JLabel DisplayResult = new JLabel("");
-		DisplayResult.setHorizontalAlignment(SwingConstants.CENTER);
-		DisplayResult.setBounds(10, 39, 316, 56);
-		panel_1.add(DisplayResult);
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(43, 106, 722, 383);
+		scrollPane.setBounds(43, 106, 722, 400);
 		panel_1.add(scrollPane);
 		
 		table = new JTable();
@@ -81,23 +74,23 @@ public class SearchManagers extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		tfUser = new JTextField();
-		tfUser.setBounds(281, 11, 187, 20);
+		tfUser.setBounds(281, 10, 187, 28);
 		panel_1.add(tfUser);
 		tfUser.setColumns(10);
 		
 		tlUser = new JTextField();
 		tlUser.setColumns(10);
-		tlUser.setBounds(281, 39, 187, 20);
+		tlUser.setBounds(281, 50, 187, 28);
 		panel_1.add(tlUser);
 		
 		JLabel lblNewLabel_1 = new JLabel("First Name");
 		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(188, 14, 83, 14);
+		lblNewLabel_1.setBounds(188, 10, 83, 26);
 		panel_1.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Last Name");
 		lblNewLabel_1_1.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(188, 42, 83, 14);
+		lblNewLabel_1_1.setBounds(188, 50, 83, 26);
 		panel_1.add(lblNewLabel_1_1);
 		
 		//Search button compares given username with each username in DB

@@ -17,19 +17,21 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
 
 
 public class ManagerSignUp extends JFrame {
 	private JPanel contentPane;
-	private JTextField username1;
-	private JPasswordField password1;
+	private JTextField user;
+	private JPasswordField pass;
 	private JPasswordField confirm;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField first;
+	private JTextField last;
+	private JTextField emailAddress;
 
 	//Create the frame
 	public ManagerSignUp() {
+		setResizable(false);
 		setIconImage(new ImageIcon(getClass().getResource("plane_icon.png")).getImage());
 		setTitle("Manager Sign Up");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -47,113 +49,137 @@ public class ManagerSignUp extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Username");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel.setBounds(20, 11, 57, 26);
+		lblNewLabel.setBounds(20, 15, 57, 26);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Password");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(20, 144, 57, 14);
+		lblNewLabel_1.setBounds(20, 139, 57, 26);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Confirm Password");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(20, 178, 111, 14);
+		lblNewLabel_2.setBounds(20, 170, 111, 26);
 		panel.add(lblNewLabel_2);
 		
-		username1 = new JTextField();
-		username1.setBounds(131, 15, 145, 20);
-		panel.add(username1);
-		username1.setColumns(10);
+		user = new JTextField();
+		user.setBounds(131, 15, 145, 28);
+		panel.add(user);
+		user.setColumns(10);
 		
 		//Signup button creates new user in DB using given username and password
 		JButton btnNewButton = new JButton("Signup");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				PreparedStatement stmt = null;
-				String username = username1.getText();
-				String password = String.valueOf(password1.getPassword());
-				String fname = textField.getText();
-				String lname = textField_1.getText();
-				String email = textField_2.getText();
-				String confirmpassword = String.valueOf(confirm.getPassword());
-				DatabaseConnection connectNow = new DatabaseConnection();
-		        Connection connectDB = connectNow.getConnection();
-				
-				try {
-					
-					
-					if(password.equals(confirmpassword)) {
-						String query="insert into admin (admin_username,admin_password,firstname,lastname,admin_email) "
-								+ "values(?, ?, ?, ?, ?)";
-						stmt= connectDB.prepareStatement(query);
-						stmt.setString(1,  username);
-						stmt.setString(2, password);
-						stmt.setString(3,  fname);
-						stmt.setString(4, lname);
-						stmt.setString(5, email);
-					
-					
-						
-						stmt.executeUpdate();
-						
-						JOptionPane.showMessageDialog(null, "Successfully Signed up");
-						dispose();
-						stmt.close();
-						connectDB.close();
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "password does not match");
-					}
-					
-					
+				if(checkEmptyField()) {
+					JOptionPane.showMessageDialog(null, "Error: Empty field");
 				}
-					catch(Exception e1) {
-						JOptionPane.showMessageDialog(null, "error");
-					}
+				else {
+					attemptSignup();
+				}
 			}
-			
-			
 		});
-		btnNewButton.setBounds(116, 221, 89, 23);
+		
+		btnNewButton.setBounds(99, 225, 89, 23);
 		panel.add(btnNewButton);
 		
-		password1 = new JPasswordField();
-		password1.setBounds(131, 142, 145, 20);
-		panel.add(password1);
+		pass = new JPasswordField();
+		pass.setBounds(131, 139, 145, 28);
+		panel.add(pass);
 		
 		confirm = new JPasswordField();
-		confirm.setBounds(131, 176, 145, 20);
+		confirm.setBounds(131, 170, 145, 28);
 		panel.add(confirm);
 		
 		JLabel lblNewLabel_3 = new JLabel("First");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(20, 48, 46, 14);
+		lblNewLabel_3.setBounds(20, 46, 46, 26);
 		panel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Last");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_4.setBounds(20, 80, 46, 14);
+		lblNewLabel_4.setBounds(20, 77, 46, 26);
 		panel.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Email");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_5.setBounds(20, 114, 46, 14);
+		lblNewLabel_5.setBounds(20, 108, 46, 26);
 		panel.add(lblNewLabel_5);
 		
-		textField = new JTextField();
-		textField.setBounds(131, 46, 145, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		first = new JTextField();
+		first.setBounds(131, 46, 145, 28);
+		panel.add(first);
+		first.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(131, 77, 145, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		last = new JTextField();
+		last.setBounds(131, 77, 145, 28);
+		panel.add(last);
+		last.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(131, 111, 145, 20);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		emailAddress = new JTextField();
+		emailAddress.setBounds(131, 108, 145, 28);
+		panel.add(emailAddress);
+		emailAddress.setColumns(10);
+	}
+
+	public void attemptSignup() {
+		PreparedStatement stmt = null;
+		String username = user.getText();
+		String password = String.valueOf(pass.getPassword());
+		String fname = formatName(first.getText());
+		String lname = formatName(last.getText());
+		String email = emailAddress.getText();
+		String confirmpassword = String.valueOf(confirm.getPassword());
+		DatabaseConnection connectNow = new DatabaseConnection();
+		Connection connectDB = connectNow.getConnection();
+		
+		try {
+			if(password.equals(confirmpassword)) {
+				String query="insert into admin (admin_username,admin_password,firstname,lastname,admin_email) "
+						+ "values(?, ?, ?, ?, ?)";
+				stmt= connectDB.prepareStatement(query);
+				stmt.setString(1,  username);
+				stmt.setString(2, password);
+				stmt.setString(3,  fname);
+				stmt.setString(4, lname);
+				stmt.setString(5, email);
+			
+				stmt.executeUpdate();
+				
+				JOptionPane.showMessageDialog(null, "Successfully Signed up");
+				dispose();
+				stmt.close();
+				connectDB.close();
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "password does not match");
+			}
+		}
+			catch(Exception e1) {
+				JOptionPane.showMessageDialog(null, "error");
+			}
+	}
+	
+	public boolean checkEmptyField() {
+		if(first.getText().isBlank() || 
+		   last.getText().isBlank()  ||
+		   emailAddress.getText().isBlank() || 
+		   user.getText().isBlank() ||
+		   String.valueOf(pass.getPassword()).isBlank()) {
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * Formats strings into proper noun format:
+	 * First letter capitalized, all other letters lowercase, all whitespace removed
+	 */
+	public String formatName(String n) {
+		if(n == null || n.isEmpty()) {
+			return n;
+		}
+		String name = n.replaceAll("\\s", "");
+		name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+		return name;
 	}
 }
